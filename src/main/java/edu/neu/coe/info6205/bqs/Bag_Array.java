@@ -16,7 +16,7 @@ public class Bag_Array<Item> implements Bag<Item> {
 
     public void add(Item item) {
         assert items != null;
-        if (full()) //noinspection NullableProblems
+        if (full())
             grow(items, 2 * capacity());
         items[count++] = item;
     }
@@ -29,7 +29,10 @@ public class Bag_Array<Item> implements Bag<Item> {
         return count;
     }
 
-    @Override
+    public void clear() {
+        count = 0;
+    }
+
     public boolean contains(Item item) {
         for (Item i : items) {
             if (i != null && i.equals(item))
@@ -55,14 +58,14 @@ public class Bag_Array<Item> implements Bag<Item> {
         return Arrays.asList(asArray()).iterator();
     }
 
-    private Item[] asArray() {
+    public Item[] asArray() {
         return Arrays.copyOf(items, count);
     }
 
     @Override
     public String toString() {
         return "Bag_Array{" +
-                "items=" + Arrays.toString(items) +
+                "items=" + Arrays.toString(asArray()) +
                 ", count=" + count +
                 '}';
     }
@@ -90,10 +93,7 @@ public class Bag_Array<Item> implements Bag<Item> {
      * @param size the size of the new array
      */
     private static <T> T[] growFrom(T[] from, int size) {
-        // TO BE IMPLEMENTED ...
-        // NOTE that we cannot use Arrays.copyOf here because we are extending the length of the array.
-        return null;
-        // ... END IMPLEMENTATION
+        // TO BE IMPLEMENTED
     }
 
     private Item[] items = null;
