@@ -4,6 +4,9 @@
 
 package edu.neu.coe.info6205.util;
 
+import edu.neu.coe.info6205.sort.simple.InsertionSort;
+
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -118,6 +121,98 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
     public Benchmark_Timer(String description, Consumer<T> f) {
         this(description, null, f, null);
     }
+
+
+//    public static void main(String[] args) {
+//        int nRuns = 20;
+//        int n = 80000;
+//        Benchmark_Timer<Boolean> bmt = new Benchmark_Timer<Boolean>("InsertionSort", new Consumer<Boolean>() {
+//            @Override
+//            public void accept(Boolean aBoolean) {
+//
+//            }
+//        });
+//        System.out.println(bmt.reversed(nRuns,n));
+//    }
+//
+//    private double ordered(int nRuns, int n){
+//        Integer[] ordered = new Integer[n];
+//        for (int i = 0; i < n ; i++) {
+//            ordered[i] = i;
+//        }
+//        Benchmark<Boolean> bm = new Benchmark_Timer<>(
+//                "testInsertionSortTimer",
+//                null,
+//                b -> {
+//                    new InsertionSort<Integer>().sort(ordered,
+//                            0,ordered.length);
+//                },
+//                null
+//        );
+//        double x = bm.run(true,nRuns);
+//        return x;
+//    }
+//
+//    private double reversed(int nRuns, int n){
+//        Integer[] reversed = new Integer[n];
+//        for (int i = 0; i < n ; i++) {
+//            reversed[i] = n-i-1;
+//        }
+//        Benchmark<Boolean> bm = new Benchmark_Timer<>(
+//                "testInsertionSortTimer",
+//                null,
+//                b -> {
+//                    new InsertionSort<Integer>().sort(reversed,
+//                            0,reversed.length);
+//                },
+//                null
+//        );
+//        double x = bm.run(true,nRuns);
+//        return x;
+//    }
+//
+//    private double partially(int nRuns, int n){
+//        Integer[] partially = new Integer[n];
+//        Random ran = new Random();
+//        for (int i = 0; i < n/2 ; i++) {
+//            partially[i] = ran.nextInt(n/2);
+//        }
+//        for (int i = n/2; i < n ; i++) {
+//            partially[i] = i;
+//        }
+//
+//        Benchmark<Boolean> bm = new Benchmark_Timer<>(
+//                "testInsertionSortTimer",
+//                null,
+//                b -> {
+//                    new InsertionSort<Integer>().sort(partially,
+//                            0,partially.length);
+//                },
+//                null
+//        );
+//        double x = bm.run(true,nRuns);
+//        return x;
+//    }
+//
+//    private double random(int nRuns, int n){
+//        Integer[] random = new Integer[n];
+//        Random ran = new Random();
+//        for (int i = 0; i < n ; i++) {
+//            random[i] = ran.nextInt(n);
+//        }
+//
+//        Benchmark<Boolean> bm = new Benchmark_Timer<>(
+//                "testInsertionSortTimer",
+//                null,
+//                b -> {
+//                    new InsertionSort<Integer>().sort(random,
+//                            0,random.length);
+//                },
+//                null
+//        );
+//        double x = bm.run(true,nRuns);
+//        return x;
+//    }
 
     private final String description;
     private final UnaryOperator<T> fPre;
