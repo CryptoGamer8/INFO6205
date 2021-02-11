@@ -8,6 +8,7 @@
 package edu.neu.coe.info6205.union_find;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Height-weighted Quick Union with Path Compression
@@ -80,10 +81,16 @@ public class UF_HWQUPC implements UF {
      */
     public int find(int p) {
         validate(p);
-        int root = p;
+        int root=p;
         // TO BE IMPLEMENTED
+        while(root!=parent[root]){
+            if(pathCompression)
+                doPathCompression(root);
+            root=parent[root];
+        }
         return root;
     }
+
 
     /**
      * Returns true if the the two sites are in the same component.
@@ -167,8 +174,23 @@ public class UF_HWQUPC implements UF {
     private int count;  // number of components
     private boolean pathCompression;
 
+    /**
+     * Merge i and j component. Modify height.
+     * @param i root point of first component
+     * @param j root point of second component
+     */
     private void mergeComponents(int i, int j) {
         // TO BE IMPLEMENTED make shorter root point to taller one
+        if(height[i]>height[j]){
+            parent[j]=i;
+        }
+        else if(height[i]<height[j]){
+            parent[i]=j;
+        }
+        else{
+            height[i]++;
+            parent[j]=i;
+        }
     }
 
     /**
@@ -176,5 +198,50 @@ public class UF_HWQUPC implements UF {
      */
     private void doPathCompression(int i) {
         // TO BE IMPLEMENTED update parent to value of grandparent
+        parent[i]=parent[parent[i]];
+    }
+
+    public static void main(String[] args) {
+        int n = 150;
+        int total = 0;
+        for (int i = 0; i <100 ; i++) {
+            int cnt=count(n);
+            total+=cnt;
+            System.out.println("The number of sites is: "+n+"\nThe number of connections is: "+cnt+"\n");
+        }
+        System.out.println("The average number of connections is: "+total/100.0);
+    }
+
+    /**
+     * Suppose we have n "sites". Generate pairs between 0 and n-1. calling connected() to determine
+     * if they are connected and union() if not. Count the number of connections.
+     *
+     * @param n number of "sites"
+     * @return number of connections. i.e. the times of calling connected()
+     */
+    public static int count(int n){
+        UF_HWQUPC uf = new UF_HWQUPC(n);
+        Random random = new Random();
+        boolean generated[] = new boolean[n];
+        Arrays.fill(generated,false);
+        int connections=0;
+        boolean loop=true;
+        while(loop) {
+            int p = random.nextInt(n);
+            int q = random.nextInt(n);
+            generated[p] = true;
+            generated[q] = true;
+            connections++;
+            if (!uf.connected(p, q)) {
+                uf.union(p, q);
+            }
+            // to be polished...
+            int index = 0;
+            for (; index < n ; index++) {
+                if(!generated[index]) break;
+            }
+            if(index==n)loop=false;
+        }
+        return connections;
     }
 }
