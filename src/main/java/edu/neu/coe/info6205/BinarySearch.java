@@ -19,8 +19,5 @@ public class BinarySearch {
             // TO BE IMPLEMENTED : implement binary search
         }
         return -1;
-
     }
-
-
 }

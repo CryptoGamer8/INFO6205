@@ -205,7 +205,7 @@ public class UF_HWQUPC implements UF {
         int n = 150;
         int total = 0;
         for (int i = 0; i <100 ; i++) {
-            int cnt=count(n);
+            int cnt=count(n, true);
             total+=cnt;
             System.out.println("The number of sites is: "+n+"\nThe number of connections is: "+cnt+"\n");
         }
@@ -219,8 +219,8 @@ public class UF_HWQUPC implements UF {
      * @param n number of "sites"
      * @return number of connections. i.e. the times of calling connected()
      */
-    public static int count(int n){
-        UF_HWQUPC uf = new UF_HWQUPC(n);
+    public static int count(int n, boolean doPathCompression){
+        UF_HWQUPC uf = new UF_HWQUPC(n, doPathCompression);
         Random random = new Random();
         boolean generated[] = new boolean[n];
         Arrays.fill(generated,false);
@@ -244,4 +244,5 @@ public class UF_HWQUPC implements UF {
         }
         return connections;
     }
+
 }
